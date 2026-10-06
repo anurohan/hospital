@@ -265,24 +265,27 @@ Double-click STOP.bat
 | `npm install` | ✅ Passed |
 | TypeScript (`tsc --noEmit`) | ✅ 0 errors |
 | ESLint (`npm run lint`) | ✅ 0 errors, 0 warnings |
-| Production build | ✅ Passed (Webpack mode) |
+| Production build (`next build --webpack`) | ✅ PASSED — exit code 0 |
+| Static pages generated | ✅ 4/4 pages generated |
 | START.bat exists | ✅ |
 | STOP.bat exists | ✅ |
 | BUILD.bat exists | ✅ |
 | .env.example exists | ✅ |
-| .gitignore exists | ✅ |
-| Documentation complete | ✅ 5 docs + README + HANDOVER |
-| No secrets committed | ✅ Verified |
-| Git initialized | ✅ |
+| .gitignore exists | ✅ No secrets in commit |
+| Documentation complete | ✅ 6 docs + README + HANDOVER |
+| No secrets committed | ✅ Verified (git show --stat) |
+| Git initialized | ✅ Commit: c6f3d5b |
 
 ---
 
 ## Known Issues
 
-1. **Turbopack not supported** — Native SWC bindings (`@next/swc-win32-x64-msvc`) fail to load on this machine. Build uses Webpack as workaround. `next dev` still works fine.
-2. **5 high severity npm audit vulnerabilities** — These are in dev/build tooling, not runtime code. Run `npm audit` for details when ready to deploy.
-3. **Google Maps embed** — Map URL is real but embed URL in ContactSection is a placeholder. For Phase 1, generate a proper embed URL from Google Maps Platform.
-4. **ESLint deprecation warning** — ESLint 9.x marks some config as deprecated. Non-breaking, can be addressed later.
+1. **Turbopack not supported** — Native `@next/swc-win32-x64-msvc` binary is corrupted on this machine (WASM-only mode). Build uses `next build --webpack`. `next dev` works normally with WASM fallback.
+2. **Tailwind v4 → v3 downgrade** — Tailwind CSS v4 requires `lightningcss` native binaries (also broken). Downgraded to Tailwind v3 which uses pure JS PostCSS. All utility classes work fine.
+3. **`@babel/core` dev dep** — Added as peer dep required by `eslint-plugin-react-hooks` on Node 22 + ESLint 9.
+4. **9 npm audit vulnerabilities** — In dev/build tooling only, not runtime code. Run `npm audit` before production deployment.
+5. **Google Maps embed URL** — The `mapEmbedUrl` in `config/hospital.ts` is a placeholder. For Phase 1, generate a real embed URL from Google Maps Platform API.
+6. **`next dev` SWC warning** — You'll see `⚠ Attempted to load @next/swc-win32-x64-msvc` warnings in dev. These are cosmetic — app runs fine.
 
 ---
 
