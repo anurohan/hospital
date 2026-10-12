@@ -6,13 +6,21 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "tsc -p tsconfig.test.json --outDir node_modules/.cache/htest && node -e \"const fs=require('node:fs'); const path=require('node:path'); const { pathToFileURL } = require('node:url'); const root=path.resolve('node_modules/.cache/htest'); const tests=[]; const seen=new Set(); const walk=(dir)=>{for (const entry of fs.readdirSync(dir,{withFileTypes:true})) {const file=path.join(dir,entry.name); if (entry.isDirectory()) walk(file); else if (entry.name.endsWith('.test.js')) { const resolved=path.resolve(file); if (!seen.has(resolved)) { seen.add(resolved); tests.push(resolved); } }}}; walk(root); if (!tests.length) { console.error('No compiled tests found in ' + root); process.exit(1); } (async () => { for (const file of tests) await import(pathToFileURL(file).href); })().catch((error) => { console.error(error); process.exit(1); });\""
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.9.1",
     "@supabase/supabase-js": "^2.117.2",
+    "date-fns": "^4.4.0",
+    "lucide-react": "^1.52.0",
     "next": "16.3.8",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "react-hook-form": "^7.89.0",
+    "sonner": "^2.0.8",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",

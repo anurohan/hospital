@@ -10,11 +10,10 @@ export const metadata: Metadata = {
   description: `${HOSPITAL_CONFIG.name} — A trusted multi-specialty hospital in ${HOSPITAL_CONFIG.address.city}, ${HOSPITAL_CONFIG.address.state}. Expert doctors, modern diagnostics, 24×7 emergency care, and online appointment booking.`,
   keywords: [
     "hospital",
-    "Arogyan",
-    "nursing home",
+    "medical center",
+    "clinic",
     HOSPITAL_CONFIG.address.city,
     HOSPITAL_CONFIG.address.state,
-    "Bihar",
     "appointment",
     "doctor",
     "emergency",

@@ -75,19 +75,19 @@ const departments = [
 
 export default function DepartmentsSection() {
   return (
-    <section id="departments" className="section" style={{ backgroundColor: "#fff" }}>
-      <div className="container">
+    <section id="departments" className="section" style={{ background: "linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)" }}>
+      <div className="section-shell container">
         <SectionHeader
           tag="Our Specialties"
           title="Comprehensive Medical Departments"
-          subtitle="From routine check-ups to complex surgical procedures — our multi-specialty team is equipped to handle all your healthcare needs."
+          subtitle="From routine wellness checks to advanced treatment plans, our multi-specialty team delivers confident, compassionate care for every life stage."
         />
 
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-            gap: "var(--space-6)",
+            gap: "1.4rem",
           }}
         >
           {departments.map((dept, i) => (
@@ -99,21 +99,21 @@ export default function DepartmentsSection() {
             >
               <div
                 className={`card card-hover animate-fade-in stagger-${Math.min(i + 1, 5)}`}
-                style={{ height: "100%", cursor: "pointer" }}
+                style={{ height: "100%", cursor: "pointer", borderRadius: "1.5rem" }}
               >
-                <div className="card-body" style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
-                  {/* Icon */}
+                <div className="card-body" style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                   <div
                     style={{
-                      width: "56px",
-                      height: "56px",
-                      borderRadius: "var(--radius-lg)",
-                      backgroundColor: dept.bg,
+                      width: "58px",
+                      height: "58px",
+                      borderRadius: "1.2rem",
+                      background: `linear-gradient(135deg, ${dept.bg}, rgba(255,255,255,0.9))`,
                       color: dept.color,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
+                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.5)",
                     }}
                   >
                     {dept.icon}
@@ -123,13 +123,14 @@ export default function DepartmentsSection() {
                     <h4
                       style={{
                         color: "var(--text-primary)",
-                        fontWeight: 600,
-                        marginBottom: "var(--space-1)",
+                        fontWeight: 700,
+                        marginBottom: "0.5rem",
+                        fontSize: "1.1rem",
                       }}
                     >
                       {dept.name}
                     </h4>
-                    <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
+                    <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
                       {dept.desc}
                     </p>
                   </div>
@@ -138,10 +139,10 @@ export default function DepartmentsSection() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: "4px",
+                      gap: "8px",
                       color: dept.color,
-                      fontSize: "0.8125rem",
-                      fontWeight: 600,
+                      fontSize: "0.8rem",
+                      fontWeight: 700,
                       marginTop: "auto",
                     }}
                   >
@@ -157,9 +158,8 @@ export default function DepartmentsSection() {
           ))}
         </div>
 
-        {/* View all link */}
-        <div style={{ textAlign: "center", marginTop: "var(--space-10)" }}>
-          <Link href="/departments" className="btn btn-outline btn-md" style={{ textDecoration: "none" }}>
+        <div style={{ textAlign: "center", marginTop: "2.5rem" }}>
+          <Link href="/departments" className="btn btn-outline btn-md" style={{ textDecoration: "none", borderRadius: "999px" }}>
             View All Departments
           </Link>
         </div>

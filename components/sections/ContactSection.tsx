@@ -5,7 +5,7 @@ import { HOSPITAL_CONFIG } from "@/config/hospital";
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="section" style={{ backgroundColor: "#fff" }}>
+    <section id="contact" className="section" style={{ background: "linear-gradient(180deg, #ffffff 0%, #f3f9ff 100%)" }}>
       <div className="container">
         <div
           style={{
@@ -16,7 +16,6 @@ export default function ContactSection() {
           }}
           className="contact-grid"
         >
-          {/* Left: info */}
           <div>
             <span
               className="pill"
@@ -33,8 +32,7 @@ export default function ContactSection() {
 
             <h2 style={{ marginBottom: "var(--space-4)" }}>We&apos;re Here to Help</h2>
             <p style={{ maxWidth: "440px", marginBottom: "var(--space-8)" }}>
-              Whether you need to book an appointment, have a medical question, or just want
-              to know your way around — our friendly team is ready.
+              Whether you need to book an appointment, have a medical question, or want a more personal introduction to our care — our team is ready.
             </p>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
@@ -68,14 +66,14 @@ export default function ContactSection() {
               />
             </div>
 
-            {/* Hours */}
             <div
               style={{
                 marginTop: "var(--space-8)",
-                backgroundColor: "var(--color-gray-50)",
-                borderRadius: "var(--radius-xl)",
+                background: "linear-gradient(180deg, rgba(255,255,255,0.9), rgba(241,245,249,0.9))",
+                borderRadius: "1.4rem",
                 padding: "var(--space-6)",
-                border: "1px solid var(--surface-border)",
+                border: "1px solid rgba(148,163,184,0.16)",
+                boxShadow: "0 18px 40px rgba(15,23,42,0.06)",
               }}
             >
               <h4 style={{ marginBottom: "var(--space-4)", fontSize: "1rem" }}>Hospital Hours</h4>
@@ -87,43 +85,39 @@ export default function ContactSection() {
             </div>
           </div>
 
-          {/* Right: Map + form placeholder */}
           <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
-            {/* Map embed placeholder */}
             <div
               style={{
-                borderRadius: "var(--radius-xl)",
+                borderRadius: "1.5rem",
                 overflow: "hidden",
-                border: "1px solid var(--surface-border)",
+                border: "1px solid rgba(148,163,184,0.18)",
                 height: "260px",
-                backgroundColor: "var(--color-gray-100)",
+                background: "linear-gradient(135deg, #dbeafe 0%, #ecfeff 100%)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 flexDirection: "column",
                 gap: "var(--space-3)",
-                color: "var(--text-muted)",
+                color: "var(--text-primary)",
+                boxShadow: "0 30px 60px rgba(15,23,42,0.08)",
               }}
             >
               <MapPinIcon size={36} />
-              <span style={{ fontWeight: 500 }}>
-                {HOSPITAL_CONFIG.name}
-              </span>
+              <span style={{ fontWeight: 700 }}>{HOSPITAL_CONFIG.name}</span>
               <a
                 href={HOSPITAL_CONFIG.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-primary btn-sm"
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: "none", borderRadius: "999px" }}
               >
                 Open in Google Maps ↗
               </a>
             </div>
 
-            {/* Quick message form (placeholder — will be wired to backend later) */}
             <div
               className="card"
-              style={{ padding: "var(--space-6)" }}
+              style={{ padding: "var(--space-6)", borderRadius: "1.5rem" }}
             >
               <h4 style={{ marginBottom: "var(--space-5)", fontSize: "1rem" }}>Send a Message</h4>
               <form
@@ -136,7 +130,7 @@ export default function ContactSection() {
                   <FormField label="Phone" id="contact-phone" type="tel" placeholder="+91 XXXXX XXXXX" />
                 </div>
                 <FormField label="Message" id="contact-message" type="textarea" placeholder="How can we help you?" />
-                <button type="submit" className="btn btn-primary btn-md">
+                <button type="submit" className="btn btn-primary btn-md" style={{ borderRadius: "999px" }}>
                   Send Message
                 </button>
               </form>

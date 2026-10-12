@@ -75,80 +75,82 @@ export default function WhyUsSection() {
     <section
       id="why-us"
       className="section"
-      style={{ backgroundColor: "var(--color-gray-50)" }}
+      style={{ background: "linear-gradient(180deg, #f8fbff 0%, #eef7ff 100%)" }}
     >
-      <div className="container">
+      <div className="section-shell container">
         <SectionHeader
           tag="Why Choose Us"
           title="Healthcare That Puts You First"
-          subtitle={`At ${HOSPITAL_CONFIG.name}, we combine medical excellence with genuine compassion. Here's what makes us different.`}
+          subtitle={`At ${HOSPITAL_CONFIG.name}, we blend medical excellence with genuine compassion to help each patient feel informed, supported, and cared for.`}
         />
 
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-            gap: "var(--space-6)",
+            gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))",
+            gap: "1.4rem",
           }}
         >
           {features.map((feat, i) => (
             <div
               key={feat.title}
               className={`card animate-fade-in stagger-${Math.min(i + 1, 5)}`}
+              style={{ borderRadius: "1.5rem" }}
             >
               <div
                 className="card-body"
-                style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}
+                style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
               >
                 <div
                   style={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "var(--radius-lg)",
+                    width: "52px",
+                    height: "52px",
+                    borderRadius: "1rem",
                     background: "linear-gradient(135deg, var(--color-primary-700), var(--color-teal-500))",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     color: "#fff",
+                    boxShadow: "0 16px 28px rgba(14,165,233,0.18)",
                   }}
                 >
                   {feat.icon}
                 </div>
                 <div>
-                  <h4 style={{ marginBottom: "var(--space-2)" }}>{feat.title}</h4>
-                  <p style={{ fontSize: "0.9rem", lineHeight: 1.65 }}>{feat.desc}</p>
+                  <h4 style={{ marginBottom: "0.5rem", fontSize: "1.08rem" }}>{feat.title}</h4>
+                  <p style={{ fontSize: "0.9rem", lineHeight: 1.7 }}>{feat.desc}</p>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* CTA strip */}
         <div
           style={{
-            marginTop: "var(--space-16)",
-            background: "linear-gradient(135deg, var(--color-primary-700), var(--color-primary-900))",
-            borderRadius: "var(--radius-2xl)",
-            padding: "var(--space-12)",
+            marginTop: "2.8rem",
+            background: "linear-gradient(135deg, #0a6ebd 0%, #092642 100%)",
+            borderRadius: "2rem",
+            padding: "clamp(1.5rem, 3vw, 3rem)",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             textAlign: "center",
-            gap: "var(--space-6)",
+            gap: "1.2rem",
+            boxShadow: "0 28px 60px rgba(15,23,42,0.18)",
           }}
         >
-          <h3 style={{ color: "#fff", fontSize: "1.75rem" }}>
+          <h3 style={{ color: "#fff", fontSize: "clamp(1.5rem, 3vw, 2.3rem)", letterSpacing: "-0.04em" }}>
             Ready to book your appointment?
           </h3>
-          <p style={{ color: "rgba(255,255,255,0.7)", maxWidth: "480px", fontSize: "1.0625rem" }}>
-            Our team is ready to assist you. Book online in under 2 minutes or call us directly.
+          <p style={{ color: "rgba(255,255,255,0.75)", maxWidth: "480px", fontSize: "1.02rem" }}>
+            Our team is ready to assist you. Book online in under 2 minutes or speak with our care coordinators directly.
           </p>
-          <div style={{ display: "flex", gap: "var(--space-4)", flexWrap: "wrap", justifyContent: "center" }}>
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center" }}>
             <Link
               href="/appointments/book"
               id="why-us-book-btn"
               className="btn btn-teal btn-lg"
-              style={{ textDecoration: "none" }}
+              style={{ textDecoration: "none", borderRadius: "999px" }}
             >
               Book Appointment
             </Link>
@@ -161,6 +163,7 @@ export default function WhyUsSection() {
                 color: "#fff",
                 border: "1px solid rgba(255,255,255,0.25)",
                 textDecoration: "none",
+                borderRadius: "999px",
               }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

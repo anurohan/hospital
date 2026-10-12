@@ -1,48 +1,144 @@
 /**
  * Global TypeScript types for Arogyan Hospital SaaS
+ * These types mirror the database schema defined in supabase/migrations/001_initial_schema.sql
  */
 
-// ─── User / Auth ─────────────────────────────────────────────────────────────
+// ─── Enums ────────────────────────────────────────────────────────────────────
 
-export type UserRole = "patient" | "doctor" | "nurse" | "admin" | "superadmin";
+export type UserRole = 'patient' | 'receptionist' | 'doctor' | 'admin' | 'superadmin';
 
-export interface UserProfile {
+export type AppointmentStatus =
+  | 'pending'
+  | 'confirmed'
+  | 'waiting'
+  | 'in_consultation'
+  | 'completed'
+  | 'cancelled'
+  | 'no_show';
+
+export type BookingSource = 'online' | 'walk_in';
+
+export type AppointmentType = 'opd' | 'follow_up' | 'emergency' | 'teleconsult';
+
+export type DayOfWeek =
+  | 'monday'
+  | 'tuesday'
+  | 'wednesday'
+  | 'thursday'
+  | 'friday'
+  | 'saturday'
+  | 'sunday';
+
+export type Gender = 'Male' | 'Female' | 'Other' | 'Prefer not to say';
+
+export type BloodGroup =
+  | 'A+' | 'A-'
+  | 'B+' | 'B-'
+  | 'AB+' | 'AB-'
+  | 'O+' | 'O-'
+  | 'Unknown';
+
+export type PaymentStatus = 'pending' | 'paid' | 'waived';
+
+export type NotificationType =
+  | 'appointment_booked'
+  | 'appointment_confirmed'
+  | 'appointment_cancelled'
+  | 'appointment_rescheduled'
+  | 'appointment_reminder'
+  | 'queue_update'
+  | 'general';
+
+// ─── Database Entities ────────────────────────────────────────────────────────
+
+export interface Hospital {
   id: string;
-  email: string;
-  full_name: string;
+  slug: string;
+  name: string;
+  short_name?: string;
+  tagline?: string;
+  logo_url?: string;
+  address_line1?: string;
+  address_line2?: string;
+  address_city?: string;
+  address_state?: string;
+  address_pin?: string;
+  address_country: string;
   phone?: string;
-  avatar_url?: string;
-  role: UserRole;
-  hospital_id: string;
+  emergency_phone?: string;
+  email?: string;
+  website?: string;
+  map_url?: string;
+  map_embed_url?: string;
+  timezone: string;
   is_active: boolean;
   created_at: string;
   updated_at: string;
 }
 
-// ─── Patient ──────────────────────────────────────────────────────────────────
+export interface UserProfile {
+  id: string;
+  hospital_id?: string;
+  full_name: string;
+  phone?: string;
+  email?: string;
+  avatar_url?: string;
+  role: UserRole;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
 
-export type BloodGroup =
-  | "A+"
-  | "A-"
-  | "B+"
-  | "B-"
-  | "AB+"
-  | "AB-"
-  | "O+"
-  | "O-"
-  | "Unknown";
+export interface Department {
+  id: string;
+  hospital_id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  icon?: string;
+  color?: string;
+  image_url?: string;
+  display_order: number;
+  head_doctor_id?: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+  // Joins
+  doctors?: Doctor[];
+  head_doctor?: Doctor;
+}
 
-export type Gender = "Male" | "Female" | "Other" | "Prefer not to say";
+export interface Doctor {
+  id: string;
+  profile_id?: string;
+  hospital_id: string;
+  department_id?: string;
+  doctor_uid?: string;
+  full_name: string;
+  specialization: string;
+  qualification?: string;
+  experience_years: number;
+  consultation_duration: number;
+  consultation_fee?: number;
+  bio?: string;
+  avatar_url?: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+  // Joins
+  department?: Department;
+  schedules?: DoctorSchedule[];
+}
 
 export interface Patient {
   id: string;
   profile_id?: string;
   hospital_id: string;
-  patient_uid: string; // e.g. ARG-2024-00001
+  patient_uid?: string;
   full_name: string;
   date_of_birth?: string;
-  gender: Gender;
-  blood_group: BloodGroup;
+  gender?: Gender;
+  blood_group: string;
   phone: string;
   email?: string;
   address?: string;
@@ -58,67 +154,59 @@ export interface Patient {
   updated_at: string;
 }
 
-// ─── Doctor ───────────────────────────────────────────────────────────────────
-
-export interface Doctor {
+export interface DoctorSchedule {
   id: string;
-  profile_id: string;
+  doctor_id: string;
   hospital_id: string;
-  doctor_uid: string; // e.g. ARG-DR-001
-  full_name: string;
-  specialization: string;
-  department_id: string;
-  qualification: string;
-  experience_years: number;
-  bio?: string;
-  avatar_url?: string;
-  consultation_fee?: number;
+  day_of_week: DayOfWeek;
+  start_time: string;
+  end_time: string;
+  slot_duration_minutes: number;
+  max_patients: number;
+  break_start?: string;
+  break_end?: string;
   is_active: boolean;
   created_at: string;
-  updated_at: string;
+  // Joins
+  doctor?: Doctor;
 }
 
-// ─── Department ───────────────────────────────────────────────────────────────
-
-export interface Department {
+export interface AppointmentSlot {
   id: string;
+  doctor_id: string;
   hospital_id: string;
-  name: string;
-  description?: string;
-  icon?: string;
-  color?: string;
-  head_doctor_id?: string;
-  is_active: boolean;
+  schedule_id?: string;
+  slot_date: string;
+  start_time: string;
+  end_time: string;
+  is_booked: boolean;
+  appointment_id?: string;
+  created_at: string;
 }
-
-// ─── Appointment ──────────────────────────────────────────────────────────────
-
-export type AppointmentStatus =
-  | "pending"
-  | "confirmed"
-  | "in_progress"
-  | "completed"
-  | "cancelled"
-  | "no_show";
-
-export type AppointmentType = "opd" | "follow_up" | "emergency" | "teleconsult";
 
 export interface Appointment {
   id: string;
   hospital_id: string;
-  appointment_uid: string; // e.g. ARG-APT-20240001
+  appointment_uid?: string;
   patient_id: string;
   doctor_id: string;
-  department_id: string;
-  appointment_date: string;
-  appointment_time: string;
+  department_id?: string;
   slot_id?: string;
+  appointment_date: string;
+  start_time: string;
+  end_time?: string;
   type: AppointmentType;
   status: AppointmentStatus;
+  booking_source: BookingSource;
+  token_number?: string;
   reason?: string;
   notes?: string;
   consultation_fee?: number;
-  payment_status?: "pending" | "paid" | "waived";
+  payment_status: PaymentStatus;
+  created_by?: string;
+  cancelled_by?: string;
+  cancellation_reason?: string;
+  cancelled_at?: string;
   created_at: string;
   updated_at: string;
   // Joins
@@ -127,53 +215,11 @@ export interface Appointment {
   department?: Department;
 }
 
-// ─── Doctor Schedule ──────────────────────────────────────────────────────────
-
-export type DayOfWeek =
-  | "monday"
-  | "tuesday"
-  | "wednesday"
-  | "thursday"
-  | "friday"
-  | "saturday"
-  | "sunday";
-
-export interface DoctorSchedule {
-  id: string;
-  doctor_id: string;
-  day_of_week: DayOfWeek;
-  start_time: string; // HH:MM
-  end_time: string; // HH:MM
-  slot_duration_minutes: number;
-  max_patients: number;
-  is_active: boolean;
-}
-
-export interface AppointmentSlot {
-  id: string;
-  doctor_id: string;
-  schedule_id: string;
-  slot_date: string;
-  start_time: string;
-  end_time: string;
-  is_booked: boolean;
-  appointment_id?: string;
-}
-
-// ─── Notifications ────────────────────────────────────────────────────────────
-
-export type NotificationType =
-  | "appointment_confirmed"
-  | "appointment_reminder"
-  | "appointment_cancelled"
-  | "appointment_rescheduled"
-  | "general";
-
 export interface Notification {
   id: string;
-  hospital_id: string;
+  hospital_id?: string;
   user_id: string;
-  type: NotificationType;
+  type: string;
   title: string;
   message: string;
   is_read: boolean;
@@ -181,33 +227,32 @@ export interface Notification {
   created_at: string;
 }
 
-// ─── Hospital Settings ────────────────────────────────────────────────────────
-
-export interface HospitalSettings {
+export interface HospitalSetting {
   id: string;
   hospital_id: string;
   setting_key: string;
-  setting_value: string;
+  setting_value?: string;
+  updated_by?: string;
   updated_at: string;
 }
 
-// ─── Audit Log ────────────────────────────────────────────────────────────────
-
 export interface AuditLog {
   id: string;
-  hospital_id: string;
-  user_id: string;
+  hospital_id?: string;
+  actor_id?: string;
   action: string;
   entity_type: string;
-  entity_id: string;
-  old_value?: Record<string, unknown>;
-  new_value?: Record<string, unknown>;
+  entity_id?: string;
+  old_data?: Record<string, unknown>;
+  new_data?: Record<string, unknown>;
   ip_address?: string;
   user_agent?: string;
   created_at: string;
+  // Joins
+  actor?: UserProfile;
 }
 
-// ─── API Response ─────────────────────────────────────────────────────────────
+// ─── API / Utility Types ──────────────────────────────────────────────────────
 
 export interface ApiResponse<T = unknown> {
   data?: T;
@@ -224,11 +269,61 @@ export interface PaginatedResponse<T> {
   totalPages: number;
 }
 
-// ─── Navigation ───────────────────────────────────────────────────────────────
-
 export interface NavItem {
   label: string;
   href: string;
   icon?: string;
+  badge?: string;
   children?: NavItem[];
+}
+
+// ─── Appointment Booking Types ────────────────────────────────────────────────
+
+export interface TimeSlot {
+  start_time: string;
+  end_time: string;
+  is_available: boolean;
+  slot_id?: string;
+}
+
+export interface BookingFormData {
+  department_id: string;
+  doctor_id: string;
+  appointment_date: string;
+  start_time: string;
+  end_time: string;
+  slot_id?: string;
+  reason?: string;
+  patient_name?: string;
+  patient_phone?: string;
+  patient_email?: string;
+}
+
+// ─── Dashboard Stats Types ───────────────────────────────────────────────────
+
+export interface DashboardStats {
+  total_today: number;
+  online_today: number;
+  walkin_today: number;
+  waiting: number;
+  in_consultation: number;
+  completed: number;
+  cancelled: number;
+  no_show: number;
+}
+
+export interface AnalyticsPeriod {
+  start_date: string;
+  end_date: string;
+  label: string;
+}
+
+// ─── Queue Types ──────────────────────────────────────────────────────────────
+
+export interface QueueEntry {
+  appointment: Appointment;
+  patient: Patient;
+  doctor: Doctor;
+  position: number;
+  estimated_time?: string;
 }

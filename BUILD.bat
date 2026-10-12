@@ -1,5 +1,6 @@
 @echo off
 setlocal enabledelayedexpansion
+cd /d "%~dp0"
 title Arogyan Hospital — Production Build
 
 color 0B
@@ -24,7 +25,7 @@ echo  OK: Node.js found.
 REM ─── Install / verify deps ───────────────────────────────────────────────────
 if not exist "node_modules" (
     echo  Installing dependencies...
-    npm install
+    call npm install
     if %errorlevel% neq 0 (
         echo  ERROR: npm install failed.
         set BUILD_STATUS=1
@@ -35,7 +36,7 @@ if not exist "node_modules" (
 REM ─── TypeScript check ─────────────────────────────────────────────────────────
 echo.
 echo  [1/3] Running TypeScript type check...
-npx tsc --noEmit
+call npx tsc --noEmit
 if %errorlevel% neq 0 (
     color 0C
     echo  FAILED: TypeScript errors found.
@@ -47,7 +48,7 @@ echo  PASSED: TypeScript check.
 REM ─── Lint ─────────────────────────────────────────────────────────────────────
 echo.
 echo  [2/3] Running ESLint...
-npm run lint
+call npm run lint
 if %errorlevel% neq 0 (
     color 0C
     echo  FAILED: ESLint errors found.
@@ -59,7 +60,7 @@ echo  PASSED: ESLint check.
 REM ─── Production build ─────────────────────────────────────────────────────────
 echo.
 echo  [3/3] Building production bundle...
-npm run build
+call npm run build
 if %errorlevel% neq 0 (
     color 0C
     echo  FAILED: Production build failed.

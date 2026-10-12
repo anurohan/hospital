@@ -19,13 +19,13 @@ export default function Header() {
 
   return (
     <>
-      {/* Top announcement bar */}
       <div
         style={{
-          backgroundColor: "var(--color-primary-700)",
+          background: "linear-gradient(90deg, #0f172a 0%, #0a6ebd 35%, #0f766e 100%)",
           color: "#fff",
           fontSize: "0.8125rem",
-          padding: "6px 0",
+          padding: "8px 0",
+          boxShadow: "inset 0 -1px 0 rgba(255,255,255,0.12)",
         }}
       >
         <div className="container flex items-center justify-between gap-4 flex-wrap">
@@ -40,7 +40,7 @@ export default function Header() {
               </svg>
               Emergency: {HOSPITAL_CONFIG.contact.emergencyPhone}
             </a>
-            <span style={{ opacity: 0.4 }}>|</span>
+            <span style={{ opacity: 0.5 }}>|</span>
             <span>OPD: {HOSPITAL_CONFIG.hours.opd}</span>
           </div>
           <div className="hide-mobile flex items-center gap-4">
@@ -55,17 +55,16 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Main navigation */}
       <header
         id="main-header"
         style={{
-          backgroundColor: "rgba(255, 255, 255, 0.97)",
-          backdropFilter: "blur(12px)",
-          borderBottom: "1px solid var(--surface-border)",
+          backgroundColor: "rgba(255, 255, 255, 0.82)",
+          backdropFilter: "blur(18px)",
+          borderBottom: "1px solid rgba(148,163,184,0.18)",
           position: "sticky",
           top: 0,
           zIndex: "var(--z-sticky)",
-          boxShadow: "var(--shadow-xs)",
+          boxShadow: "0 12px 36px rgba(15,23,42,0.08)",
         }}
       >
         <div className="container" style={{ paddingBlock: "0" }}>
@@ -74,28 +73,27 @@ export default function Header() {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              height: "68px",
+              height: "74px",
               gap: "var(--space-6)",
             }}
           >
-            {/* Logo */}
             <Link
               href="/"
               style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", textDecoration: "none" }}
             >
               <div
                 style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "var(--radius-lg)",
-                  background: "linear-gradient(135deg, var(--color-primary-700), var(--color-teal-500))",
+                  width: "44px",
+                  height: "44px",
+                  borderRadius: "1rem",
+                  background: "linear-gradient(135deg, #0a6ebd 0%, #14b8a6 100%)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   flexShrink: 0,
+                  boxShadow: "0 12px 30px rgba(14,165,233,0.25)",
                 }}
               >
-                {/* Hospital cross icon */}
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                   <path d="M12 2v20M2 12h20" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
                 </svg>
@@ -104,21 +102,22 @@ export default function Header() {
                 <div
                   style={{
                     fontFamily: "var(--font-display)",
-                    fontWeight: 700,
-                    fontSize: "1.0625rem",
+                    fontWeight: 800,
+                    fontSize: "1.15rem",
                     color: "var(--text-primary)",
                     lineHeight: 1.1,
+                    letterSpacing: "-0.03em",
                   }}
                 >
                   {HOSPITAL_CONFIG.name}
                 </div>
                 <div
                   style={{
-                    fontSize: "0.6875rem",
+                    fontSize: "0.68rem",
                     color: "var(--text-muted)",
-                    letterSpacing: "0.06em",
+                    letterSpacing: "0.07em",
                     textTransform: "uppercase",
-                    fontWeight: 500,
+                    fontWeight: 700,
                   }}
                 >
                   {HOSPITAL_CONFIG.address.city}, {HOSPITAL_CONFIG.address.state}
@@ -126,13 +125,12 @@ export default function Header() {
               </div>
             </Link>
 
-            {/* Desktop nav links */}
             <ul
               className="hide-mobile"
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "var(--space-1)",
+                gap: "0.25rem",
                 listStyle: "none",
               }}
             >
@@ -141,10 +139,10 @@ export default function Header() {
                   <Link
                     href={link.href}
                     style={{
-                      padding: "6px 14px",
-                      borderRadius: "var(--radius-md)",
+                      padding: "8px 14px",
+                      borderRadius: "999px",
                       fontSize: "0.9rem",
-                      fontWeight: 500,
+                      fontWeight: 600,
                       color: "var(--text-secondary)",
                       textDecoration: "none",
                       transition: "all var(--transition-fast)",
@@ -158,12 +156,12 @@ export default function Header() {
               ))}
             </ul>
 
-            {/* CTA + Hamburger */}
             <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
               <Link
                 href="/appointments/book"
                 id="header-book-btn"
                 className="btn btn-primary btn-sm hide-mobile"
+                style={{ borderRadius: "999px", boxShadow: "0 16px 30px rgba(14,165,233,0.18)" }}
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <rect x="3" y="4" width="18" height="18" rx="2"/>
@@ -175,13 +173,12 @@ export default function Header() {
                 Book Appointment
               </Link>
 
-              {/* Hamburger */}
               <button
                 id="mobile-menu-toggle"
                 onClick={() => setMobileOpen(!mobileOpen)}
                 className="show-mobile btn btn-ghost btn-sm"
                 aria-label="Toggle mobile menu"
-                style={{ padding: "8px" }}
+                style={{ padding: "8px", borderRadius: "999px" }}
               >
                 {mobileOpen ? (
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -200,12 +197,11 @@ export default function Header() {
           </nav>
         </div>
 
-        {/* Mobile menu */}
         {mobileOpen && (
           <div
             className="show-mobile"
             style={{
-              borderTop: "1px solid var(--surface-border)",
+              borderTop: "1px solid rgba(148,163,184,0.18)",
               backgroundColor: "#fff",
               padding: "var(--space-4)",
             }}

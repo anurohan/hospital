@@ -1,5 +1,6 @@
 @echo off
 setlocal enabledelayedexpansion
+cd /d "%~dp0"
 title Arogyan Hospital — Start Development Server
 
 color 0B
@@ -25,24 +26,26 @@ echo  OK: Node.js %NODE_VER%
 
 REM ─── Check npm ───────────────────────────────────────────────────────────────
 echo  [2/5] Checking npm...
-npm --version >nul 2>&1
+call npm --version >nul 2>&1
 if %errorlevel% neq 0 (
     color 0C
     echo  ERROR: npm is not available.
     pause
     exit /b 1
 )
-for /f "tokens=*" %%v in ('npm --version') do set NPM_VER=%%v
+for /f "tokens=*" %%v in ('call npm --version') do set NPM_VER=%%v
 echo  OK: npm v%NPM_VER%
 
 REM ─── Check environment ───────────────────────────────────────────────────────
 echo  [3/5] Checking environment...
 if not exist ".env.local" (
     color 0E
-    echo  WARNING: .env.local not found.
-    echo  Copy .env.example to .env.local and add your Supabase credentials.
-    echo  The app will start but Supabase features will not work.
+    echo  WARNING: .env.local not found. Creating from .env.example...
+    if exist ".env.example" copy .env.example .env.local >nul 2>&1
+    echo  Created .env.local. Add your Supabase credentials if needed.
     echo.
+) else (
+    echo  OK: .env.local present.
 )
 
 REM ─── Install dependencies ────────────────────────────────────────────────────
@@ -51,7 +54,7 @@ if not exist "node_modules" (
     echo  node_modules not found. Installing dependencies...
     echo  This may take a few minutes on first run.
     echo.
-    npm install
+    call npm install
     if %errorlevel% neq 0 (
         color 0C
         echo  ERROR: npm install failed. Check your network connection.
@@ -74,8 +77,8 @@ echo  ================================================
 echo.
 
 REM Open browser after a short delay
-start /b cmd /c "timeout /t 3 /nobreak >nul && start http://localhost:3000"
+start /b cmd /c "ping 127.0.0.1 -n 4 >nul && start http://localhost:3000"
 
-npm run dev
+call npm run dev
 
 pause

@@ -52,41 +52,42 @@ export interface HospitalConfig {
   };
 }
 
-export const AROGYAN_CONFIG: HospitalConfig = {
-  id: "arogyan-nursing-hospital",
-  name: "Arogyan Nursing Hospital",
-  shortName: "Arogyan",
-  tagline: "Compassionate Care, Advanced Medicine",
+export const NORTHSTAR_MEDICAL_CONFIG: HospitalConfig = {
+  id: "northstar-medical-center",
+  name: "NorthStar Medical Center",
+  shortName: "NorthStar",
+  tagline: "Smarter care. Softer experiences.",
   logo: "/images/logo.png",
   address: {
-    line1: "Bishunganj",
-    city: "Gaya",
-    state: "Bihar",
-    pincode: "823003",
-    country: "India",
+    line1: "145 Harbor Avenue",
+    line2: "Suite 204",
+    city: "Demo City",
+    state: "California",
+    pincode: "90001",
+    country: "United States",
   },
   contact: {
-    phone: "+91 94730 75435",
-    emergencyPhone: "+91 94730 75435",
-    email: "info@arogyanhospital.com",
-    whatsapp: "+91 94730 75435",
+    phone: "+1 (555) 123-4567",
+    emergencyPhone: "+1 (555) 987-6543",
+    email: "hello@northstarmedical.example",
+    whatsapp: "+1 (555) 123-4567",
   },
   hours: {
     opd: "Mon–Sat: 8:00 AM – 8:00 PM",
     emergency: "24 × 7",
     pharmacy: "Mon–Sat: 8:00 AM – 9:00 PM",
   },
-  mapUrl: "https://maps.app.goo.gl/DrhWnC5T2ssiExSF9",
+  mapUrl: "https://maps.google.com/?q=145+Harbor+Avenue+Demo+City+CA",
   mapEmbedUrl:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.0!2d85.0!3d24.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zArogyan+Nursing+Hospital!5e0!3m2!1sen!2sin!4v1",
+    "https://www.google.com/maps?q=Demo+City+CA&output=embed",
   theme: {
     primaryColor: "#0a6ebd",
     accentColor: "#00b4a0",
   },
   features: {
     onlineAppointments: true,
-    telemedicine: false,
-    onlinePayments: false,
+    telemedicine: true,
+    onlinePayments: true,
     patientPortal: true,
   },
 };
@@ -95,4 +96,4 @@ export const AROGYAN_CONFIG: HospitalConfig = {
  * Active hospital config.
  * In a multi-tenant setup, load this dynamically based on subdomain / env var.
  */
-export const HOSPITAL_CONFIG: HospitalConfig = AROGYAN_CONFIG;
+export const HOSPITAL_CONFIG: HospitalConfig = NORTHSTAR_MEDICAL_CONFIG;
